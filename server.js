@@ -1,6 +1,5 @@
 const express = require('express')
-require("./data/config")
-//const mysql = require('mysql')
+const mysql = require('mysql')
 const myconn = require('express-myconnection')
 const cors = require('cors');
 
@@ -8,9 +7,21 @@ const routes = require('./routes')
 const revision = require('./revisiones')
 
 const app = express()
-app.set('port', process.env.PORT)
+app.set('port', process.env.PORT || 9000)
+const dbOptions = {
+    host: 'us-cdbr-east-06.cleardb.net',
+    port: 3306,
+    user: 'bc7c6e2bc89178',
+    password: 'ffa8caa0',
+    database: 'apideploy63',
+    name: 'heroku_95d49ace277e61a?reconnect=true'
+}
+
+// middlewares -------------------------------------
+app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
 app.use(cors())
+
 
 // routes -------------------------------------------
 app.get('/', (req, res)=>{
@@ -27,4 +38,3 @@ app.use('/api1', revision)
 app.listen(app.get('port'), ()=>{
     console.log('server running on port', app.get('port'))
 })
-

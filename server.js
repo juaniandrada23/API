@@ -23,7 +23,11 @@ app.use(cors())
 
 // routes -------------------------------------------
 app.get('/', (req, res)=>{
-    res.send('Welcome to my API')
+    const content = `
+    <h1>Server con Express</h1>
+    <pre>primera prueba de servidor con Node y el framework Express</pre>
+    `;
+  res.send(content);
 })
 app.use('/api', routes)
 app.use('/api1', revision)

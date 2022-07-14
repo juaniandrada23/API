@@ -21,6 +21,13 @@ app.get('/', (req, res)=>{
 app.use('/api', routes)
 app.use('/api1', revision)
 
+app.use((req, res, next) => {
+  let error = new Error();
+  error.status = 404;
+  error.message = "Resource not found";
+  next(error);
+});
+
 // server running -----------------------------------
 app.listen(app.get('port'), ()=>{
     console.log('server running on port', app.get('port'))
